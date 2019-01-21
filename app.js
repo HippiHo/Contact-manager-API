@@ -7,13 +7,23 @@ const contactsRouter = require("./routes/contacts");
 
 const app = express();
 
+/**
+ * Connect to DB
+ */
+mongoose.connect(
+  "mongodb://localhost:27017/content-manager-api",
+  {
+    useNewUrlParser: true
+  }
+);
+
+// eslint-disable-next-line no-console
+mongoose.connection.on("error", console.error);
+
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/contacts", contactsRouter);
 
 module.exports = app;
