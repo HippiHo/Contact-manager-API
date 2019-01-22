@@ -54,15 +54,13 @@ const contactSchema = new Schema({
   phone_number: PhoneSchema,
   email: EmailSchema,
   address: AddressSchema,
-  website: String,
   birthday: Date,
-  relationship: String,
+  relationship: trimmedString(),
   languages: {
     type: String,
     required: true,
     enum: LANGUAGES
-  },
-  first_location: String
+  }
 });
 
 module.exports = mongoose.model("Contact", contactSchema);

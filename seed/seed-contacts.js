@@ -35,7 +35,7 @@ async function seedContacts() {
         },
         birthday: faker.date.past(),
         languages: faker.random.arrayElement(LANGUAGES),
-        first_location: faker.lorem.sentence()
+        relationship: faker.random.word()
       });
 
       return contact.save();
