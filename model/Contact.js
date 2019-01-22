@@ -2,17 +2,67 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
+const { LANGUAGES } = require("../lib/constants");
+
+const trimmedString = options => ({
+  type: String,
+  trim: true,
+  ...options
+});
+
+const NameSchema = new Schema(
+  {
+    name_prefix: trimmedString(),
+    first_name: trimmedString({ required: true }),
+    last_name: trimmedString()
+  },
+  { _id: false }
+);
+
+const PhoneSchema = new Schema(
+  {
+    mobile: {
+      type: Number,
+      required: true
+    },
+    private: Number,
+    business: Number
+  },
+  { _id: false }
+);
+
+const EmailSchema = new Schema(
+  {
+    private: String,
+    business: String
+  },
+  { _id: false }
+);
+
+const AddressSchema = new Schema(
+  {
+    street: String,
+    city: String,
+    post_code: Number
+  },
+  { _id: false }
+);
+
 const contactSchema = new Schema({
-  name: { prefix: String, first_name: String, last_name: String },
-  organisation: String,
-  phone_number: { mobile: Number, private: Number, business: Number },
+  name: NameSchema,
+  organisation: trimmedString(),
+  phone_number: PhoneSchema,
   ringing_tone: String,
-  email: { private: String, business: String },
-  address: { street: String, city: String, post_code: Number },
+  email: EmailSchema,
+  address: AddressSchema,
   website: String,
-  birthday: String,
+  birthday: Date,
   relationship: String,
-  languages: Array,
+  languages: {
+    type: String,
+    required: true,
+    enum: LANGUAGES
+  },
   first_location: String
 });
 

@@ -1,5 +1,7 @@
-exports.listContacts = (req, res) => {
-  res.send("list all contacts");
+const Contact = require("../model/Contact");
+
+exports.listContacts = async (req, res) => {
+  res.json(await Contact.find());
 };
 
 exports.addContact = (req, res) => {

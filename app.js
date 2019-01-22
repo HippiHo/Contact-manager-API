@@ -5,6 +5,8 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const contactsRouter = require("./routes/contacts");
 
+const { errorMessage } = require("./controllers/messagesController");
+
 const app = express();
 
 /**
@@ -13,7 +15,8 @@ const app = express();
 mongoose.connect(
   "mongodb://localhost:27017/content-manager-api",
   {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useCreateIndex: true
   }
 );
 
@@ -25,5 +28,15 @@ app.use(express.json());
 
 app.use("/", indexRouter);
 app.use("/contacts", contactsRouter);
+
+// Catch any unrecognized route and send an error message
+app.use((req, res, next) => {
+  const error = new Error("Not Found");
+  error.statusCode = 404;
+
+  next(error);
+});
+
+app.use(errorMessage);
 
 module.exports = app;

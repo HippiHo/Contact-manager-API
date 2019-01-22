@@ -5,11 +5,13 @@
   "scripts": {
     "start": "node ./bin/www",
     "debug": "DEBUG=content-manager-api:* node --inspect ./bin/www",
-    "watch": "DEBUG=content-manager-api:* nodemon --inspect ./bin/www"
+    "watch": "DEBUG=content-manager-api:* nodemon --inspect ./bin/www",
+    "seed:contacts": "node seed/seed-contacts.js"
   },
   "dependencies": {
     "debug": "~2.6.9",
     "express": "~4.16.0",
+    "faker": "^4.1.0",
     "mongoose": "^5.4.5",
     "morgan": "~1.9.0"
   },
