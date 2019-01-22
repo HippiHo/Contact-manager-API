@@ -22,11 +22,11 @@ const NameSchema = new Schema(
 const PhoneSchema = new Schema(
   {
     mobile: {
-      type: Number,
+      type: String,
       required: true
     },
-    private: Number,
-    business: Number
+    private: String,
+    business: String
   },
   { _id: false }
 );
@@ -52,7 +52,6 @@ const contactSchema = new Schema({
   name: NameSchema,
   organisation: trimmedString(),
   phone_number: PhoneSchema,
-  ringing_tone: String,
   email: EmailSchema,
   address: AddressSchema,
   website: String,

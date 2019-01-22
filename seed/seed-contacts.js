@@ -30,7 +30,7 @@ async function seedContacts() {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName()
         },
-        phone: {
+        phone_number: {
           mobile: faker.phone.phoneNumber()
         },
         birthday: faker.date.past(),
