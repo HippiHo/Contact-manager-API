@@ -56,11 +56,13 @@ const contactSchema = new Schema({
   address: AddressSchema,
   birthday: Date,
   relationship: trimmedString(),
-  languages: {
-    type: String,
-    required: true,
-    enum: LANGUAGES
-  }
+  languages: [
+    {
+      type: String,
+      required: true,
+      enum: LANGUAGES
+    }
+  ]
 });
 
 module.exports = mongoose.model("Contact", contactSchema);
