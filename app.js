@@ -13,7 +13,7 @@ const app = express();
  * Connect to DB
  */
 mongoose.connect(
-  "mongodb://localhost:27017/content-manager-api",
+  "mongodb://localhost:27017/contact-manager-api",
   {
     useNewUrlParser: true,
     useCreateIndex: true
