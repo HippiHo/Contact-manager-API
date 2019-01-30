@@ -4,6 +4,7 @@ const logger = require("morgan");
 
 const indexRouter = require("./routes/index");
 const contactsRouter = require("./routes/contacts");
+const personsRouter = require("./routes/persons");
 
 const { errorMessage } = require("./controllers/messagesController");
 
@@ -28,6 +29,7 @@ app.use(express.json());
 
 app.use("/", indexRouter);
 app.use("/contacts", contactsRouter);
+app.use("/persons", personsRouter);
 
 // Catch any unrecognized route and send an error message
 app.use((req, res, next) => {

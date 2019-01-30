@@ -2,67 +2,34 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
+const { NameSchema } = require("./NameSchema");
+const { PhoneSchema } = require("./PhoneSchema");
+const { EmailSchema } = require("./EmailSchema");
+const { AddressSchema } = require("./AddressSchema");
 const { LANGUAGES } = require("../lib/constants");
+const { trimSchemaStrings } = require("../lib/helpers");
 
-const trimmedString = options => ({
-  type: String,
-  trim: true,
-  ...options
-});
-
-const NameSchema = new Schema(
-  {
-    name_prefix: trimmedString(),
-    first_name: trimmedString({ required: true }),
-    last_name: trimmedString()
-  },
-  { _id: false }
-);
-
-const PhoneSchema = new Schema(
-  {
-    mobile: {
-      type: String,
+const contactSchema = new Schema(
+  trimSchemaStrings({
+    person: {
+      type: Schema.Types.ObjectId,
+      ref: "Person"
+    },
+    organisation: String,
+    phone_number: {
+      type: PhoneSchema,
       required: true
     },
-    private: String,
-    business: String
-  },
-  { _id: false }
+    email: EmailSchema,
+    address: AddressSchema,
+    languages: [
+      {
+        type: String,
+        required: true,
+        enum: LANGUAGES
+      }
+    ]
+  })
 );
-
-const EmailSchema = new Schema(
-  {
-    private: String,
-    business: String
-  },
-  { _id: false }
-);
-
-const AddressSchema = new Schema(
-  {
-    street: String,
-    city: String,
-    post_code: Number
-  },
-  { _id: false }
-);
-
-const contactSchema = new Schema({
-  name: NameSchema,
-  organisation: trimmedString(),
-  phone_number: PhoneSchema,
-  email: EmailSchema,
-  address: AddressSchema,
-  birthday: Date,
-  relationship: trimmedString(),
-  languages: [
-    {
-      type: String,
-      required: true,
-      enum: LANGUAGES
-    }
-  ]
-});
 
 module.exports = mongoose.model("Contact", contactSchema);
