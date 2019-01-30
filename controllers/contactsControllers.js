@@ -23,6 +23,7 @@ exports.listContacts = async (req, res, next) => {
       path: "person",
       select: "name"
     });
+    console.log("contact", contact);
     if (contact.length === 0) throw new createError.NotFound();
     res.json(contact);
   } catch (e) {

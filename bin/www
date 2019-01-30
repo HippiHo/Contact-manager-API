@@ -5,7 +5,7 @@
  */
 
 const app = require("../app");
-const debug = require("debug")("content-manager-api:server");
+const debug = require("debug")("contact-manager-api:server");
 const http = require("http");
 
 /**

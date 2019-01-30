@@ -2,12 +2,13 @@
 const faker = require("faker");
 const mongoose = require("mongoose");
 
+const Person = require("../model/Person");
 const Contact = require("../model/Contact");
 const { LANGUAGES } = require("../lib/constants");
 
-async function seedContacts() {
+(async function seedContacts() {
   mongoose.connect(
-    "mongodb://localhost:27017/content-manager-api",
+    "mongodb://localhost:27017/contact-manager-api",
     {
       useNewUrlParser: true,
       useCreateIndex: true
@@ -22,26 +23,28 @@ async function seedContacts() {
     console.error(err);
   }
 
-  const contactPromises = Array(15)
-    .fill(null)
-    .map(() => {
-      const contact = new Contact({
-        name: {
-          first_name: faker.name.firstName(),
-          last_name: faker.name.lastName()
-        },
-        phone_number: {
-          mobile: faker.phone.phoneNumber()
-        },
-        birthday: faker.date.past(),
-        languages: faker.random.arrayElement(LANGUAGES),
-        relationship: faker.random.word()
+  try {
+    const persons = await Person.find();
+    if (persons.length === 0) {
+      throw new Error("Cannot find any persons");
+    }
+
+    console.log(`Got ${persons.length} persons from the db`);
+
+    const contactPromises = Array(15)
+      .fill(null)
+      .map(() => {
+        const contact = new Contact({
+          person: faker.random.arrayElement(persons)._id,
+          phone_number: {
+            mobile: faker.phone.phoneNumber()
+          },
+          languages: faker.random.arrayElement(LANGUAGES)
+        });
+
+        return contact.save();
       });
 
-      return contact.save();
-    });
-
-  try {
     await Promise.all(contactPromises);
     console.log("Contacts seeded!");
   } catch (err) {
@@ -49,6 +52,4 @@ async function seedContacts() {
   }
 
   mongoose.connection.close();
-}
-
-seedContacts();
+})();

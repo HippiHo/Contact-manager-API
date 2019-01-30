@@ -22,13 +22,11 @@ const contactSchema = new Schema(
     },
     email: EmailSchema,
     address: AddressSchema,
-    languages: [
-      {
-        type: String,
-        required: true,
-        enum: LANGUAGES
-      }
-    ]
+    languages: {
+      type: String,
+      required: true,
+      enum: LANGUAGES
+    }
   })
 );
 
