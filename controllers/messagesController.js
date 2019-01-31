@@ -8,6 +8,7 @@ exports.errorMessage = (err, req, res, next) => {
 
 exports.welcomeMessage = (req, res) => {
   res.json({
-    message: "Welcome to the bookshelf api, start by making requests to /books"
+    message:
+      "Welcome to the contact manager api, start by making requests to /contacts"
   });
 };
