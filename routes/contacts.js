@@ -3,11 +3,7 @@ const router = express.Router();
 //const mongoose = require("mongoose");
 
 const { validateInputs } = require("../middleware/validation");
-const {
-  newContact,
-  contactId,
-  byPerson
-} = require("../lib/validation/contactRules");
+const { newContact, contactId } = require("../lib/validation/contactRules");
 
 const {
   listContacts,
@@ -19,7 +15,7 @@ const {
 
 router
   .route("/")
-  .get(validateInputs(byPerson), listContacts)
+  .get(listContacts)
   .post(validateInputs(newContact), addContact);
 
 router

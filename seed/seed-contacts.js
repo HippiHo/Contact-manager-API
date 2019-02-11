@@ -2,18 +2,14 @@
 const faker = require("faker");
 const mongoose = require("mongoose");
 
-const Person = require("../model/Person");
 const Contact = require("../model/Contact");
 const { LANGUAGES } = require("../lib/constants");
 
 (async function seedContacts() {
-  mongoose.connect(
-    "mongodb://localhost:27017/contact-manager-api",
-    {
-      useNewUrlParser: true,
-      useCreateIndex: true
-    }
-  );
+  mongoose.connect("mongodb://localhost:27017/contact-manager-api", {
+    useNewUrlParser: true,
+    useCreateIndex: true
+  });
   mongoose.connection.on("error", console.error);
 
   try {
@@ -24,20 +20,31 @@ const { LANGUAGES } = require("../lib/constants");
   }
 
   try {
-    const persons = await Person.find();
-    if (persons.length === 0) {
-      throw new Error("Cannot find any persons");
-    }
-
-    console.log(`Got ${persons.length} persons from the db`);
-
     const contactPromises = Array(15)
       .fill(null)
       .map(() => {
         const contact = new Contact({
-          person: faker.random.arrayElement(persons)._id,
+          name: {
+            name_prefix: faker.name.prefix(),
+            first_name: faker.name.firstName(),
+            last_name: faker.name.lastName()
+          },
+          birthday: faker.date.past(),
+          relationship: faker.hacker.noun(),
+          organisation: faker.company.companyName(),
           phone_number: {
-            mobile: faker.phone.phoneNumber()
+            mobile: faker.phone.phoneNumber(),
+            private: faker.phone.phoneNumber(),
+            business: faker.phone.phoneNumber()
+          },
+          email: {
+            private: faker.internet.email(),
+            business: faker.internet.email()
+          },
+          address: {
+            street: faker.address.streetAddress(),
+            city: faker.address.city(),
+            post_code: faker.address.zipCode()
           },
           languages: faker.random.arrayElement(LANGUAGES)
         });

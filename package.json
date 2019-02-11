@@ -6,9 +6,7 @@
     "start": "node ./bin/www",
     "debug": "DEBUG=contact-manager-api:* node --inspect ./bin/www",
     "watch": "DEBUG=contact-manager-api:* nodemon --inspect ./bin/www",
-    "seed:contacts": "node seed/seed-contacts.js",
-    "seed:persons": "node seed/seed-persons.js",
-    "seed": "npm run seed:persons && npm run seed:contacts"
+    "seed:contacts": "node seed/seed-contacts.js"
   },
   "dependencies": {
     "debug": "~2.6.9",

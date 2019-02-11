@@ -11,9 +11,14 @@ const { trimSchemaStrings } = require("../lib/helpers");
 
 const contactSchema = new Schema(
   trimSchemaStrings({
-    person: {
-      type: Schema.Types.ObjectId,
-      ref: "Person"
+    name: {
+      type: NameSchema,
+      required: true
+    },
+    birthday: Date,
+    relationship: {
+      type: String,
+      default: "No relationship given"
     },
     organisation: String,
     phone_number: {

@@ -11,20 +11,10 @@
 const createError = require("http-errors");
 
 const Contact = require("../model/Contact");
-const Person = require("../model/Person");
 
 exports.listContacts = async (req, res, next) => {
   try {
-    let query = null;
-    if (req.query.person) {
-      query = { person: req.query.person };
-    }
-    const contact = await Contact.find(query).populate({
-      path: "person",
-      select: "name"
-    });
-    if (contact.length === 0) throw new createError.NotFound();
-    res.json(contact);
+    res.json(await Contact.find());
   } catch (e) {
     next(e);
   }

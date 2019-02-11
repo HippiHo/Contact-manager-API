@@ -7,7 +7,7 @@ exports.AddressSchema = new Schema(
   trimSchemaStrings({
     street: String,
     city: String,
-    post_code: Number
+    post_code: String
   }),
   { _id: false }
 );
