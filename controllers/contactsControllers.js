@@ -21,6 +21,7 @@ exports.listContacts = async (req, res, next) => {
 };
 
 exports.addContact = async (req, res, next) => {
+  console.log(req.body);
   try {
     const contact = new Contact(req.body);
     await contact.save();
